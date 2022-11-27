@@ -182,7 +182,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Pekerjaan</label>
-                    <select class="form-control select2" style="width: 100%;" name="pekerjaan">
+                    <select class="form-control select2" style="width: 100%;" name="pekerjaan" {{disabled}}>
                       <option selected="selected">{{data[4]}}</option>
                       <option>PNS</option>
                       <option>Pegawai Swasta</option>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Agama</label>
-                    <select class="form-control select2" style="width: 100%;" name="agama">
+                    <select class="form-control select2" style="width: 100%;" name="agama" {{disabled}}>
                       <option selected="selected">{{data[5]}}</option>
                       <option>Islam</option>
                       <option>Kristen</option>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Status</label>
-                    <select class="form-control select2" style="width: 100%;" name="status">
+                    <select class="form-control select2" style="width: 100%;" name="status" {{disabled}}>
                       <option selected="selected">{{data[6]}}</option>
                       <option>Orang tua kandung</option>
                       <option>Orang tua tiri</option>
@@ -215,7 +215,7 @@
                 </div>
                 <div>
                   <button type="submit" class="btn btn-success" {{disabled}}>Save Change</button>
-                  <a href="{{url_for('databaseOrtu', filename='databaseOrtu.html')}}"><button type="button" class="btn btn-info">Back</button></a>
+                  <a href="{{url_for('database', filename='database.html')}}"><button type="button" class="btn btn-info">Back</button></a>
                 </div>
               </form>
             </div>

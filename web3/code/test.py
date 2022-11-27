@@ -185,6 +185,14 @@ def databaseOrtu():
 def edit(id):
     db = getMysqlConnection()
     cur = db.cursor()
+
+    sqlstr = "SELECT kd_ortu from orang_tua"
+    cur.execute(sqlstr)
+    output_id_ortu = cur.fetchall()
+    sqlstr = "SELECT id_kelas from kelas"
+    cur.execute(sqlstr)
+    output_id_kelas = cur.fetchall()
+
     strid = str(id)
     cur.execute('SELECT * FROM siswa WHERE nis='+strid+'')
     data = cur.fetchone()
@@ -218,7 +226,9 @@ def edit(id):
         return render_template(
             'edit.html', 
             data=data, 
-            disabled=''
+            disabled='',
+            output_id_kelas=output_id_kelas,
+            output_id_ortu=output_id_ortu
         ) 
 
 
@@ -452,6 +462,10 @@ def profileGuru():
 def editKelas(id):
     db = getMysqlConnection()
     cur = db.cursor()
+    sqlstr = "SELECT nip from guru"
+    cur.execute(sqlstr)
+        
+    id_kelas = cur.fetchall()
     strid = str(id)
     cur.execute('SELECT * FROM kelas WHERE id_kelas='+strid+'')
     data = cur.fetchone()
@@ -470,7 +484,8 @@ def editKelas(id):
             'editKelas.html', 
             data=data, 
             sukses=sukses, 
-            disabled=disabled
+            disabled=disabled,
+            id=id_kelas
         )
     else:
         cur.close()
@@ -478,7 +493,8 @@ def editKelas(id):
         return render_template(
             'editKelas.html', 
             data=data, 
-            disabled=''
+            disabled='',
+            id=id_kelas
         ) 
 
 #DELETE KELAS
@@ -602,6 +618,7 @@ def profileMapel():
 def editUser(id):
     db = getMysqlConnection()
     cur = db.cursor()
+    
     sqlstr = "SELECT * FROM pengguna WHERE username='"+id+"'"
     cur.execute(sqlstr)
     data = cur.fetchone()
@@ -695,6 +712,57 @@ def informasi(id):
 
 
 
+# CREATE DATABASE MENGAJAR
+@application.route('/Profile/mengajar', methods=['GET','POST'])
+def profileMengajar():
+    if request.method == 'GET':
+        db = getMysqlConnection()
+        cur = db.cursor()
+        # Mengambil id mapel
+        sqlstr = "SELECT id_mapel from mapel"
+        cur.execute(sqlstr)
+        output_id_mapel = cur.fetchall()
+
+        # Mengambil nip guru
+        sqlstr = "SELECT nip from guru"
+        cur.execute(sqlstr)
+        output_nip = cur.fetchall()
+
+        return render_template('profileMengajar.html', id_mapel=output_id_mapel, nip=output_nip)
+    if request.method == 'POST':
+        db = getMysqlConnection()
+        cur = db.cursor()
+        input_id_mapel = request.form.getlist('id_mapel')
+        nip = request.form['nip']
+        
+        for i in input_id_mapel:
+            cur.execute('INSERT INTO mengajar VALUES (%s, %s)', (nip, i[0],))
+            db.commit()
+
+        print("AWADWADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd")
+        
+        cur.close()
+        db.close()
+        return render_template('profileMengajar.html')
+    else:
+        cur.close()
+        db.close()
+        return render_template('profileMengajar.html')
+
+
+#DELETE DATABASE MENGAJAR
+@application.route('/deleteMengajar/<int:id>', methods=['GET'])
+def deleteMengajar(id):
+
+    if request.method == 'GET':
+        db = getMysqlConnection()
+        idString = str(id)
+        sqlstr = "DELETE FROM mengajar WHERE nip="+idString+""
+        cur = db.cursor()
+        cur.execute(sqlstr)
+        db.commit()
+
+        return redirect(url_for('database'))
 
 # @application.route('/informasi')
 # def informasi():

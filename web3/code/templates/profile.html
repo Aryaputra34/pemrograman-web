@@ -204,16 +204,20 @@
                     <div class="form-group">
                       <label for="exampleInputEmail1">ID KELAS</label>
                       <select class="form-control select2" style="width: 100%;" name="id_kelas">
-                        <option selected="selected">-</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        <option></option>
+                        {% for item in id_kelas %}
+                        <option>{{item[0]}}</option>
+                        {% endfor %}
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">KD ORTU</label>
-                      <input type="text" class="form-control" name="kd_ortu" placeholder="kd_ortu">
+                      <select class="form-control select2" style="width: 100%;" name="kd_ortu">
+                        <option></option>
+                        {% for item in id_ortu %}
+                        <option>{{item[0]}}</option>
+                        {% endfor %}
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Tanggal Daftar</label>

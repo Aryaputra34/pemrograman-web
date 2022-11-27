@@ -143,12 +143,20 @@ def database():
             sqlstr = "SELECT * from pengguna"
             cur.execute(sqlstr)
             output_user = cur.fetchall()
+            # Mengambil database Mengajar
+            sqlstr = "SELECT * from mengajar"
+            cur.execute(sqlstr)
+            output_mengajar = cur.fetchall()
+            # Mengambil nama guru
+            sqlstr = "SELECT nama_guru from guru"
+            cur.execute(sqlstr)
+            output_namaguru = cur.fetchall()
 
         except Exception as e:
             print("Error in SQL:\n", e)
         finally:
             db.close()
-            return render_template('database.html', datasiswa=output_siswa, dataortu=output_ortu, dataguru=output_guru, datakelas=output_kelas, datamapel=output_mapel, datauser=output_user)
+            return render_template('database.html', datasiswa=output_siswa, dataortu=output_ortu, dataguru=output_guru, datakelas=output_kelas, datamapel=output_mapel, datauser=output_user, datamengajar=output_mengajar, namaguru=output_namaguru)
 
 @application.route('/Database/Orangtua', methods=['GET','POST'])
 def databaseOrtu():
@@ -234,7 +242,19 @@ def delete(id):
 @application.route('/Profile/siswa', methods=['GET','POST'])
 def profile():
     if request.method == 'GET':
-        return render_template('profile.html')
+        db = getMysqlConnection()
+        cur = db.cursor()
+
+        sqlstr = "SELECT kd_ortu from orang_tua"
+        cur.execute(sqlstr)
+        id_ortu = cur.fetchall()
+
+        sqlstr = "SELECT id_kelas from kelas"
+        cur.execute(sqlstr)
+        id_kelas = cur.fetchall()
+
+
+        return render_template('profile.html', id_ortu=id_ortu, id_kelas=id_kelas)
     if request.method == 'POST':
         # Mengambil data form
         db = getMysqlConnection()
@@ -479,7 +499,16 @@ def deleteKelas(id):
 @application.route('/Profile/kelas', methods=['GET','POST'])
 def profileKelas():
     if request.method == 'GET':
-        return render_template('profileKelas.html')
+        db = getMysqlConnection()
+        cur = db.cursor()
+
+        sqlstr = "SELECT nip from guru"
+        cur.execute(sqlstr)
+        
+        id_kelas = cur.fetchall()
+
+
+        return render_template('profileKelas.html', id=id_kelas)
     if request.method == 'POST':
         db = getMysqlConnection()
         cur = db.cursor()

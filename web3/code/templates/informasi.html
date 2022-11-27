@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>SMAN 6 | Informasi</title>
+   <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='img/img-logo-smk.png')}}">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+    
+    <div class="container-fluid">
+        <div class="navbar navbar-expand mx-auto" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="/index">Beranda</a>
+            <a class="nav-link" aria-current="page" href="/informasi/0">Informasi</a>
+            <a class="nav-link" href="{{ url_for('logout',filename='logout.html')}}">Log Out</a>
+            <a class="nav-link" href="#">[{{username}}]</a>
+          </div>
+        </div>
+    </div>
+    <div class="container" id="container2">
+        <p class="judull">SMA Negeri 6 Jakarta</p> <br>
+        <p class="judulll">Data Siswa SMA Negeri 6 Jakarta</p> <br>
+        <table class="tabel">
+            <tr>
+                {% for items in data_kelas %}
+                <th><a href="\informasi\{{items[0]}}">{{ items[1] }}</a></th>
+                {% endfor %}
+            </tr>
+        </table>
+        <table class="tabel">
+            <thead>
+                <h3 style="margin: 20px 7.5%;">Daftar Siswa Kelas <b>{{cur_kelas}}</b> :</h3>
+                <tr>
+                    <th>NIS</th>
+                    <th>Nama</th>
+                    <th>Gender</th>
+                    <th>Kota Asal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data_siswa %}
+                <tr>
+                    <th>{{ item[0] }}</th>
+                    <th>{{ item[1] }}</th>
+                    <th>{{ item[5] }}</th>
+                    <th>{{ item[3] }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

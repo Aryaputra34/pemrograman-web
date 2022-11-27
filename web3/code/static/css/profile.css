@@ -1,0 +1,18 @@
+.judul span {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.judul p {
+    font-size: 14px;
+    color: darkgrey;
+}
+
+.judul {
+    padding: 10px;
+}
+
+.akhir {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

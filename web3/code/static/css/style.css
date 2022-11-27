@@ -1,0 +1,102 @@
+
+/* Navbar */
+.navbar span{
+    
+    /* color: white !important; */
+    color: white;
+    margin-top: 500px;
+    font-family: Viga;
+    font-size: 50px;
+    
+
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.container-fluid{
+    margin-top: 100px;
+}
+.navbar-nav .nav-link {
+
+    color: blue;
+    margin-top: 20px;
+    font-weight: 500;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+
+}
+
+
+
+
+body{
+    font-family: sans-serif;
+    background:  #95dbc9;
+    text-align: center;
+}
+
+.container .judul, .container .judull {
+    font-size: 56px;
+    color: #3677B2;
+}
+
+.container .judull {
+    font-size: 24px;
+}
+
+.container .judulll {
+    font-size: 56px;
+}
+
+body .container .tabel {
+    border: 1px solid;
+    margin: 0px 7.5%;
+    margin-bottom: 20px;
+    width: 85%;
+    border-collapse: collapse;
+}
+
+.container th, td {
+    padding: 10px;
+    border: 1px solid;
+}
+
+.container .tabel thead {
+    background-color: rgb(119, 67, 67);
+}
+
+body .container .tabel h3 {
+    margin: 0px 7.5%;
+}
+
+.container .tabel1 {
+    margin: 20px 7.5%;
+}
+
+.container .tabel1 th, td, a {
+    text-decoration: none;
+    color: grey;
+}
+
+
+#logo{
+    width: 50%;
+    margin:auto;
+    padding:auto;
+    padding-bottom: 20px;
+}
+
+#container{
+    width: 460px;
+    background: white;
+    margin:180px auto;
+    padding: 30px 20px;
+    border-radius: 6px;
+}
+
+#container2{
+    width: 860px;
+    background: white;
+    margin: 280px auto;
+    margin-top: -100px;
+    padding: 30px 20px;
+    border-radius: 6px;
+}

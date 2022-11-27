@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>E-learning Sma 6 Jakarta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+	<div id="container">
+        <a href="{{url_for('login', filename='login.html')}}"><img src="{{ url_for('static',filename='img/logosma6.jpeg')}}" id="logo" width="100px"/></a>
+        <h1>E-learning SMA 6 Jakarta</h1>
+            <a href="{{url_for('dashboard', filename='dashboard.html')}}" {{hidden2}} {{hidden3}}><i class="fas fa-home"></i>Dashboard</a>
+            <a href="/informasi/0" {{hidden2}}><i class="fas fa-home"></i>Informasi</a>
+            <a href="{{url_for('login', filename='login.html')}}"{{hidden}}><i class="fas fa-sign-out-alt"></i>Login </a>
+            <a href="{{url_for('logout')}}" {{hidden2}}><i class="fas fa-sign-out-alt"></i>Log Out</a>
+	</div>
+</body>
+</html>

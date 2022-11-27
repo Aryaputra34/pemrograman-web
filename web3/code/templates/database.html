@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMAN 6 | Database</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../static/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/dist/css/adminlte.min.css">
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href=".../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href=".../static/plugins/toastr/toastr.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="../static/img/logosma6.jpeg" alt="AdminLTELogo" height="60" width="60">
+    </div>
+  
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+  
+      <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a href="{{url_for('logout')}}"><button type="button" class="btn-sm btn-info">Log Out</button></a>
+      </li>
+    </nav>
+    <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{{url_for('index')}}" class="brand-link">
+      <img src="../static/img/logosma6.jpeg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Sma 6 Jakarta</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      
+
+      
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{{url_for('dashboard', filename='dashboard.html')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-book"></i>
+                <p>Database</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/informasi/0" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+                <p>Informasi</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url_for('index', filename='index.html')}}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+                <p>Homepage</p>
+            </a>
+          </li>
+    </div>
+</aside>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Database</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Database</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <!-- FIXED HEADER -->
+          <!-- DATABASE SISWA -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Database Siswa</h3>
+    
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput" onkeyup="myFunction()">
+    
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                  <table class="table table-head-fixed text-nowrap" id="myTable">
+                    <thead>
+                      <tr>
+                      <th>NIS</th>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>Tempat Lahir</th>
+                      <th>Tanggal Lahir</th>
+                      <th>Gender</th>
+                      <th>Agama</th>
+                      <th>ID Kelas</th>
+                      <th>Kode Ortu</th>
+                      <th style="width: 100px;">Tanggal Masuk</th>
+                      <th colspan="2"  style="text-align: center ;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set index = namespace(count=1) %}
+                        {%for item in datasiswa %}
+                        <!-- {{loop.index}} -->
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                            <td>{{item[5]}}</td>
+                            <td>{{item[6]}}</td>
+                            <td>{{item[7]}}</td>
+                            <td>{{item[8]}}</td>
+                            <td>{{item[9]}}</td>
+                            <td style="width: 10px;"><span><a href="/edit/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                            <td style="width: 10px;"><span><a href="/delete/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                          </tr>
+                          {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+                <div class="col-md-2">
+                  <a href="{{url_for('profile', filename='profile.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                </div>
+              </div>
+
+
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+
+          <!-- DATABASE ORANG TUA -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Database Orang Tua</h3>
+    
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput2" onkeyup="myFunction2()">
+    
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                  <table class="table table-head-fixed text-nowrap" id="myTable2">
+                    <thead>
+                      <tr>
+                      <th>Kode OrangTua</th>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>Telepon</th>
+                      <th>Pekerjaan</th>
+                      <th>Agama</th>
+                      <th style="width: 100px;">Status</th>
+                      <th colspan="2"  style="text-align: center ;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set index = namespace(count=1) %}
+                        {%for item in dataortu %}
+                        <!-- {{loop.index}} -->
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                            <td>{{item[5]}}</td>
+                            <td>{{item[6]}}</td>
+                            <td style="width: 10px;"><span><a href="/editOrtu/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                            <td style="width: 10px;"><span><a href="/deleteOrtu/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                          </tr>
+                          {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+                <div class="col-md-2">
+                  <a href="{{url_for('profileOrtu', filename='profileOrtu.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+
+          <!-- DATABASE GURU -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Database Guru</h3>
+    
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput3" onkeyup="myFunction3()">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                  <table class="table table-head-fixed text-nowrap" id="myTable3">
+                    <thead>
+                      <tr>
+                      <th>NIP</th>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>Tempat Lahir</th>
+                      <th>Gender</th>
+                      <th>Agama</th>
+                      <th>Telepon</th>
+                      <th>Pendidikan</th>
+                      <th>Status</th>
+                      <th colspan="2"  style="text-align: center ;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set index = namespace(count=1) %}
+                        {%for item in dataguru %}
+                        <!-- {{loop.index}} -->
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                            <td>{{item[5]}}</td>
+                            <td>{{item[6]}}</td>
+                            <td style="text-align: center ;">{{item[7]}}</td>
+                            <td style="text-align: center ;">{{item[8]}}</td>
+                            <td style="width: 10px;"><span><a href="/editGuru/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                            <td style="width: 10px;"><span><a href="/deleteGuru/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                          </tr>
+                          {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+                <div class="col-md-2">
+                  <a href="{{url_for('profileGuru', filename='profileGuru.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                </div>
+              </div>
+
+
+              <!-- DATABASE KELAS -->
+              <div class="row">
+                <div class="col-7">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Database Kelas</h3>
+        
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput4" onkeyup="myFunction4()">
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                      <table class="table table-head-fixed text-nowrap" id="myTable4">
+                        <thead>
+                          <tr>
+                          <th>ID Kelas</th>
+                          <th>Nama Kelas</th>
+                          <th>NIP</th>
+                          <th colspan="2"  style="text-align: center ;">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% set index = namespace(count=1) %}
+                            {%for item in datakelas %}
+                            <!-- {{loop.index}} -->
+                            <tr>
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1]}}</td>
+                                <td>{{item[2]}}</td>
+                                <td style="width: 10px;"><span><a href="/editKelas/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                                <td style="width: 10px;"><span><a href="/deleteKelas/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                              </tr>
+                              {% endfor %}
+                        </tbody>
+                      </table>
+                      
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="col-md-2">
+                      <a href="{{url_for('profileKelas', filename='profileKelas.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              <!-- DATABASE MATA PELAJARAN -->
+                <div class="col-5">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Database Mata Pelajaran</h3>
+        
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput5" onkeyup="myFunction5()">
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                      <table class="table table-head-fixed text-nowrap" id="myTable5">
+                        <thead>
+                          <tr>
+                          <th>ID Mapel</th>
+                          <th>Nama Mapel</th>
+                          <th colspan="2"  style="text-align: center ;">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% set index = namespace(count=1) %}
+                            {%for item in datamapel %}
+                            <!-- {{loop.index}} -->
+                            <tr>
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1]}}</td>
+                                <td style="width: 10px;"><span><a href="/editMapel/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                                <td style="width: 10px;"><span><a href="/deleteMapel/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                              </tr>
+                              {% endfor %}
+                        </tbody>
+                      </table>
+                      
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="col-md-2">
+                      <a href="{{url_for('profileMapel', filename='profileMapel.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                    </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
+
+
+
+            <!-- DATABASE PENGGUNA -->
+            <div class="col-5 mx-auto">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Database Pengguna</h3>
+    
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="myInput6" onkeyup="myFunction6()">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                  <table class="table table-head-fixed text-nowrap" id="myTable6">
+                    <thead>
+                      <tr>
+                      <th>Username</th>
+                      <th>Password</th>
+                      <th colspan="2"  style="text-align: center ;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set index = namespace(count=1) %}
+                        {%for item in datauser %}
+                        <!-- {{loop.index}} -->
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td style="width: 10px;"><span><a href="/editUser/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                            <td style="width: 10px;"><span><a href="/deleteUser/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                          </tr>
+                          {% endfor %}
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+                <div class="col-md-2">
+                  <a href="{{url_for('register', filename='register.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                </div>
+              </div>
+              </div>
+          </div>
+        </div>
+
+            
+
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../static/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../static/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/dist/js/demo.js"></script>
+<!-- Toastr -->
+<script src="../static/plugins/toastr/toastr.min.js"></script>
+
+<script src="../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<script>
+  function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunction2() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput2");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable2");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunction3() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput3");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable3");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunction4() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput4");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable4");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunction5() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput5");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable5");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunction6() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput6");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable6");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+</body>
+</html>

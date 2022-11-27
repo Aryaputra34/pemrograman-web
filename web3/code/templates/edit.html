@@ -198,11 +198,21 @@
                 </div>
                 <div class="form-group">
                   <label>ID Kelas</label>
-                  <input type="text" class="form-control" placeholder="Masukkan author" name="id_kelas" value="{{data[7]}}" required {{disabled}}>
+                  <select class="form-control select2" style="width: 100%;" name="id_kelas" {{disabled}}>
+                    <option>{{data[7]}}</option>
+                    {% for item in output_id_kelas %}
+                    <option>{{item[0]}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Kode Orang Tua</label>
-                  <input type="text" class="form-control" placeholder="Masukkan author" name="kd_ortu" value="{{data[8]}}" required {{disabled}}>
+                  <select class="form-control select2" style="width: 100%;" name="kd_ortu" {{disabled}}>
+                    <option>{{data[8]}}</option>
+                    {% for item in output_id_ortu %}
+                    <option>{{item[0]}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Tanggal Daftar</label>

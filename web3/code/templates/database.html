@@ -506,7 +506,7 @@
                             <td>{{item[0]}}</td>
                             <td>{{item[1]}}</td>
                             <td style="width: 10px;"><span><a href="/editUser/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
-                            <td style="width: 10px;"><span><a href="/deleteUser/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                            <td style="width: 10px;"><span><a href="/deleteMengajar/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
                           </tr>
                           {% endfor %}
                     </tbody>
@@ -515,7 +515,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="col-md-2">
-                  <a href="{{url_for('register', filename='register.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
+                  <a href="{{url_for('profileMengajar', filename='profileMengajar.html')}}"><button type="button" style="margin: 10px;" class="btn btn-primary">Create</button></a>
                 </div>
               </div>
             </div>

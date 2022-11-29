@@ -726,7 +726,7 @@ def profileMengajar():
         db = getMysqlConnection()
         cur = db.cursor()
         # Mengambil id mapel
-        sqlstr = "SELECT id_mapel from mapel"
+        sqlstr = "SELECT * from mapel"
         cur.execute(sqlstr)
         output_id_mapel = cur.fetchall()
 
@@ -779,7 +779,7 @@ def editMengajar(id):
     cur = db.cursor()
 
     # Mengambil id mapel
-    sqlstr = "SELECT id_mapel from mapel"
+    sqlstr = "SELECT * from mapel"
     cur.execute(sqlstr)
     output_id_mapel = cur.fetchall()
 

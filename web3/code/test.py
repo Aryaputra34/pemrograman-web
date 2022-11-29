@@ -26,11 +26,11 @@ def index():
 
 @application.route('/dashboard')
 def dashboard():
-    if 'loggedin' in session:
+    if 'loggedin' in session and session['username'] == 'admin':
         # User is loggedin show them the home page
         return render_template('dashboard.html', username=session['username'])
     # User is not loggedin redirect to login page
-    return redirect(url_for('login',gagal="gagal"))
+    return redirect(url_for('index',gagal="gagal"))
 
 
 # HALAMAN LOGIN
@@ -189,7 +189,7 @@ def edit(id):
     sqlstr = "SELECT kd_ortu from orang_tua"
     cur.execute(sqlstr)
     output_id_ortu = cur.fetchall()
-    sqlstr = "SELECT id_kelas from kelas"
+    sqlstr = "SELECT * from kelas"
     cur.execute(sqlstr)
     output_id_kelas = cur.fetchall()
 
@@ -259,7 +259,7 @@ def profile():
         cur.execute(sqlstr)
         id_ortu = cur.fetchall()
 
-        sqlstr = "SELECT id_kelas from kelas"
+        sqlstr = "SELECT * from kelas"
         cur.execute(sqlstr)
         id_kelas = cur.fetchall()
 
@@ -675,6 +675,12 @@ def informasi(id):
     cur = db.cursor()
     # Memasukkan isi data username di session ke variabel username
     username = session['username']
+
+    hidden = ""
+
+    if session['username'] != 'admin':
+        hidden = "hidden"
+
     if id == 0 :
         cur.execute("SELECT * from kelas")
         data_kelas = cur.fetchall()
@@ -708,6 +714,7 @@ def informasi(id):
         data_siswa=data_siswa,
         data_kelas=data_kelas_all,
         cur_kelas=cur_kelas,
+        hidden=hidden
     )
 
 
@@ -739,7 +746,6 @@ def profileMengajar():
             cur.execute('INSERT INTO mengajar VALUES (%s, %s)', (nip, i[0],))
             db.commit()
 
-        print("AWADWADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd")
         
         cur.close()
         db.close()
@@ -763,6 +769,51 @@ def deleteMengajar(id):
         db.commit()
 
         return redirect(url_for('database'))
+
+# EDIT DATABASE MENGAJAR
+@application.route('/editMengajar/<int:id>', methods=['GET','POST'])
+def editMengajar(id):
+
+    strid = str(id)
+    db = getMysqlConnection()
+    cur = db.cursor()
+
+    # Mengambil id mapel
+    sqlstr = "SELECT id_mapel from mapel"
+    cur.execute(sqlstr)
+    output_id_mapel = cur.fetchall()
+
+    # Mengambil nip guru
+    sqlstr = "SELECT nip from mengajar where nip =' "+strid+" ' "
+    cur.execute(sqlstr)
+    output_nip = cur.fetchall()
+
+    if request.method == 'GET':
+        return render_template('editMengajar.html', id_mapel=output_id_mapel, nip=output_nip)
+    if request.method == 'POST':
+        db = getMysqlConnection()
+        cur = db.cursor()
+        sqlstr = "DELETE FROM mengajar WHERE nip="+strid+""
+        cur = db.cursor()
+        cur.execute(sqlstr)
+        db.commit()
+        
+        input_id_mapel = request.form.getlist('id_mapel')
+        nip = request.form['nip']
+        
+        for i in input_id_mapel:
+            cur.execute('INSERT INTO mengajar VALUES (%s, %s)', (nip, i[0],))
+            db.commit()
+
+        
+        cur.close()
+        db.close()
+        return render_template('editMengajar.html', id_mapel=output_id_mapel, nip=output_nip, disabled="disabled")
+    else:
+        cur.close()
+        db.close()
+        return render_template('editMengajar.html', id_mapel=output_id_mapel, nip=output_nip)
+
 
 # @application.route('/informasi')
 # def informasi():

@@ -493,8 +493,9 @@
                   <table class="table table-head-fixed text-nowrap" id="myTable6">
                     <thead>
                       <tr>
-                      <th>ID Guru</th>
-                      <th>Mata Pelajaran</th>
+                      <th style="width: 100px;">No</th>
+                      <th style="text-align: center;">ID Guru</th>
+                      <th style="text-align: center;">Mata Pelajaran</th>
                       <th colspan="2"  style="text-align: center ;">Aksi</th>
                       </tr>
                     </thead>
@@ -503,10 +504,11 @@
                         {%for item in datamengajar %}
                         <!-- {{loop.index}} -->
                         <tr>
-                            <td>{{item[0]}}</td>
-                            <td>{{item[1]}}</td>
-                            <td style="width: 10px;"><span><a href="/editUser/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
-                            <td style="width: 10px;"><span><a href="/deleteMengajar/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
+                            <td>{{loop.index}}</td>
+                            <td style="text-align: center;">{{item[0]}}</td>
+                            <td style="text-align: center;">{{item[1]}}</td>
+                            <td style="width: 10px;" style="text-align: center;"><span><a href="/editMengajar/{{item[0]}}"><button type="button" class="btn btn-outline-info btn-sm" style="margin-top: -10px ;">Update</button></a></span></td>
+                            <td style="width: 10px;" style="text-align: center;"><span><a href="/deleteMengajar/{{item[0]}}" onclick="return confirm('Are you sure you want to delete?');"><button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: -10px ;">Delete</button></a></span></td>
                           </tr>
                           {% endfor %}
                     </tbody>

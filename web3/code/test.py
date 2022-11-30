@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from auth import tampil
 from ast import pattern
 import mysql.connector
@@ -833,6 +833,30 @@ def index2():
     return render_template('index.html', hidden3="hidden", hidden2=hidden)
     
 
+
+@application.route('/hello')
+def hello_world():
+    return "<p>hellow world</p>"
+
+@application.route('/person/')
+def hello():
+    # Menggunakan dictionary = True pada db.cursor() agar dapat memasukkan string ke dalam index isi['string]
+    # jika tidak menggunakan dictionay, maka index harus berupa angka isi[0] == isi['id_mapel]
+    db = getMysqlConnection()
+    cur = db.cursor(dictionary=True)
+
+    sqlstr = "SELECT * from mapel"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_data = []
+    content = {}
+
+    for isi in data:
+        content = {'id_mapel' : isi['id_mapel'], 'nama_mapel' : isi['nama_mapel']}
+        output_data.append(content)
+        content = {}
+
+    return jsonify(output_data)
 
 if __name__ == '__main__':
     application.run(debug=True)

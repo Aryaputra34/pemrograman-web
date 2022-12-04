@@ -848,15 +848,82 @@ def hello():
     sqlstr = "SELECT * from mapel"
     cur.execute(sqlstr)
     data = cur.fetchall()
-    output_data = []
+    output_mapel = []
     content = {}
 
     for isi in data:
-        content = {'id_mapel' : isi['id_mapel'], 'nama_mapel' : isi['nama_mapel']}
-        output_data.append(content)
+        content = {'$tabel' :["mapel"],'id_mapel' : isi['id_mapel'], 'nama_mapel' : isi['nama_mapel']}
+        output_mapel.append(content)
         content = {}
 
-    return jsonify(output_data)
+    sqlstr = "SELECT * from kelas"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_kelas = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["kelas"],'id_kelas' : isi['id_kelas'], 'kelas' : isi['kelas'], 'nip' : isi['nip']}
+        output_kelas.append(content)
+        content = {}
+
+    sqlstr = "SELECT * from guru"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_guru = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["guru"],'nip' : isi['nip'], 'nama_guru' : isi['nama_guru'], 'alamat' : isi['alamat'], 'tmp_lahir' : isi['tmp_lahir'], 'gender' : isi['gender'], 'agama' : isi['agama'], 'telepon' : isi['telepon'], 'pendidikan' : isi['pendidikan'], 'status' : isi['status']}
+        output_guru.append(content)
+        content = {}
+
+    sqlstr = "SELECT * from mengajar"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_mengajar = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["mengajar"],'nip' : isi['nip'], 'id_mapel' : isi['id_mapel']}
+        output_mengajar.append(content)
+        content = {}
+
+    sqlstr = "SELECT * from orang_tua"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_orang_tua = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["orang tua"],'kd_ortu' : isi['kd_ortu'], 'nama_ortu' : isi['nama_ortu'], 'alamat' : isi['alamat'], 'telepon' : isi['telepon'], 'pekerjaan' : isi['pekerjaan'], 'agama' : isi['agama'], 'status' : isi['status']}
+        output_orang_tua.append(content)
+        content = {}
+
+    sqlstr = "SELECT * from pengguna"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_pengguna = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["pengguna"],'username' : isi['username'], 'password' : isi['password']}
+        output_pengguna.append(content)
+        content = {}
+    
+    sqlstr = "SELECT * from siswa"
+    cur.execute(sqlstr)
+    data = cur.fetchall()
+    output_siswa = []
+    content = {}
+
+    for isi in data:
+        content = {'$tabel' :["siswa"],'nis' : isi['nis'], 'nama_siswa' : isi['nama_siswa'], 'alamat' : isi['alamat'], 'tempat_lahir' : isi['tempat_lahir'], 'tgl_lahir' : isi['tgl_lahir'], 'gender' : isi['gender'], 'agama' : isi['agama'], 'id_kelas' : isi['id_kelas'], 'kd_ortu' : isi['kd_ortu'], 'tgl_daftar' : isi['tgl_daftar']}
+        output_siswa.append(content)
+        content = {}
+
+
+    return jsonify(output_mapel, output_kelas, output_guru, output_mengajar, output_orang_tua, output_pengguna, output_siswa)
 
 if __name__ == '__main__':
     application.run(debug=True)

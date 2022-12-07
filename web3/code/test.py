@@ -838,7 +838,7 @@ def index2():
 def hello_world():
     return "<p>hellow world</p>"
 
-@application.route('/person/')
+@application.route('/api')
 def hello():
     # Menggunakan dictionary = True pada db.cursor() agar dapat memasukkan string ke dalam index isi['string]
     # jika tidak menggunakan dictionay, maka index harus berupa angka isi[0] == isi['id_mapel]
@@ -924,6 +924,121 @@ def hello():
 
 
     return jsonify(output_mapel, output_kelas, output_guru, output_mengajar, output_orang_tua, output_pengguna, output_siswa)
+
+
+@application.route('/api/mapelbyid/<int:id>')
+def mapelbyid(id):
+    db = getMysqlConnection()
+    cur = db.cursor(dictionary=True)
+    cur.execute('select * from mapel where id_mapel = '+str(id)+'')
+    data = cur.fetchall()
+    output_mapel = []
+    content = {}
+
+    for isi in data:
+        content = {'id_mapel' : isi['id_mapel'], 'nama_mapel' : isi['nama_mapel']}
+        output_mapel.append(content)
+        content = {}
+
+    return jsonify(output_mapel = output_mapel)
+
+
+@application.route('/api/insertmapel', methods=['POST'])
+def apiinsertmapel():
+    
+
+    db = getMysqlConnection()
+    cur = db.cursor()
+    
+
+    var1 = request.form['id_mapel']
+    var2 = request.form['nama_mapel']
+    sql = "INSERT INTO mapel(id_mapel, nama_mapel) VALUES('"+var1+"', '"+var2+"');"
+    print("sql2", sql)
+    print(request.form.to_dict())
+    cur.execute(sql)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'insert success',
+                    'kode':'001'})
+
+@application.route('/api/insertkelas', methods=['POST'])
+def apiinsertsiswa():
+    
+
+    db = getMysqlConnection()
+    cur = db.cursor()
+    
+
+    var1 = request.form['id_kelas']
+    sql = "INSERT INTO kelas(id_kelas) VALUES('"+var1+"');"
+    print("sql2", sql)
+    print(request.form.to_dict())
+    cur.execute(sql)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'insert success',
+                    'kode':'001'})
+
+@application.route('/api/insertguru', methods=['POST'])
+def apiinsertguru():
+    
+
+    db = getMysqlConnection()
+    cur = db.cursor()
+    
+
+    var1 = request.form['nip']
+    sql = "INSERT INTO guru(nip) VALUES('"+var1+"');"
+    print("sql2", sql)
+    print(request.form.to_dict())
+    cur.execute(sql)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'insert success',
+                    'kode':'001'})
+                
+@application.route('/api/insertortu', methods=['POST'])
+def apiinsertortu():
+    
+
+    db = getMysqlConnection()
+    cur = db.cursor()
+    
+
+    var1 = request.form['kd_ortu']
+    sql = "INSERT INTO orang_tua(kd_ortu) VALUES('"+var1+"');"
+    print("sql2", sql)
+    print(request.form.to_dict())
+    cur.execute(sql)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'insert success',
+                    'kode':'001'})
+
+
+@application.route('/api/insertuser', methods=['POST'])
+def apiinsertuser():
+    
+
+    db = getMysqlConnection()
+    cur = db.cursor()
+    
+
+    var1 = request.form['username']
+    sql = "INSERT INTO pengguna(username) VALUES('"+var1+"');"
+    print("sql2", sql)
+    print(request.form.to_dict())
+    cur.execute(sql)
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'insert success',
+                    'kode':'001'})
 
 if __name__ == '__main__':
     application.run(debug=True)

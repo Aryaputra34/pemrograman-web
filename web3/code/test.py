@@ -2,11 +2,13 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from auth import tampil
 from ast import pattern
 import mysql.connector
+import os
+from decouple import config
 application = Flask(__name__)
 application.secret_key = "super secret key"
 
 def getMysqlConnection():
-    return mysql.connector.connect(user='root', host='localhost', port='3306', password='', database='watchlist')
+    return mysql.connector.connect(user=config("DB_USER"), host=config("DB_HOST"), port=config("DB_PORT"), password=config("DB_PASSWORD"), database=config("DB_NAME"))
 
 @application.route('/')
 @application.route('/index')
@@ -36,7 +38,6 @@ def dashboard():
 # HALAMAN LOGIN
 @application.route('/Login', methods=['GET','POST'])
 def login():
-    
     # Memeriksa apakah "username" dan "password" POST telah di isi (input pengguna)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         # memasukkan data form ke variabel agar lebih mudah di akses
